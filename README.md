@@ -1,8 +1,12 @@
 # 🛍️ PocketShop Fullstack
+|![Mobile Preview](ScreenShots/cover.png) | 
+|:-------------:|
+---
+<p align="center"> <img src="https://img.shields.io/badge/Backend-PocketBase-blue?style=for-the-badge" /> <img src="https://img.shields.io/badge/Mobile-Flutter-42A5F5?style=for-the-badge" /> <img src="https://img.shields.io/badge/Web-Angular-DD0031?style=for-the-badge" /> <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" /> <img src="https://img.shields.io/github/stars/ziad-elaraby/PocketShop-Fullstack?style=social" /> </p>
 
 A **full-stack e-commerce system** built with **PocketBase**, **Flutter**, and **Angular**, designed for modern scalability and real-time performance.  
-This project is still **under active development**, but it already demonstrates advanced integration between a custom backend, mobile, and web interfaces.
-<p align="center"> <img src="https://img.shields.io/badge/Backend-PocketBase-blue?style=for-the-badge" /> <img src="https://img.shields.io/badge/Mobile-Flutter-42A5F5?style=for-the-badge" /> <img src="https://img.shields.io/badge/Web-Angular-DD0031?style=for-the-badge" /> <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" /> <img src="https://img.shields.io/github/stars/ziad-elaraby/PocketShop-Fullstack?style=social" /> </p>
+>This project is still **under active development**, but it already demonstrates advanced integration between a custom backend, mobile, and web interfaces.
+
  
 
 ## 🚀 Overview
@@ -24,6 +28,39 @@ All components are connected seamlessly through **PocketBase REST APIs**.
 
 Each module communicates via PocketBase’s REST API, ensuring synchronized data between platforms.
 
+---
+
+## 🖼️ Web Preview
+
+| Main Screen | Main Screen|
+|:-------------:|:-----------:|
+| ![Main Screen with Category](ScreenShots/1.png) | ![Main Screen](ScreenShots/2.png) |
+
+| details Screen| comments part|
+|:-------------:|:-----------:|
+| ![details Screen](ScreenShots/3.png) | ![comments part](ScreenShots/4.png) |
+
+| Edit product(admin only) Screen| WishList Screen|
+|:-------------:|:-----------:|
+| ![Edit product(admin only) Screen](ScreenShots/5.png) | ![WishList Screen](ScreenShots/6.png) |
+
+| Cart Screen| Search Screen|
+|:-------------:|:-----------:|
+| ![Cart Screen](ScreenShots/7.png) | ![Search Screen](ScreenShots/8.png) |
+
+
+
+## 🖼️ Mobile Preview
+
+| Mobile Preview | 
+|:-------------:|
+| ![Mobile Preview](ScreenShots/mobile.png) | 
+
+## 🖼️ DashBoard Preview
+
+| DashBoard(Super admin) Screen | DashBoard(Super admin) Screen|
+|:-------------:|:-----------:|
+| ![DashBoard(Super admin)](ScreenShots/dashboard1.png) | ![DashBoard(Super admin)](ScreenShots/dashboard2.png) |
 ---
 
 ## 📂 Project Structure
@@ -72,6 +109,10 @@ PocketShop-Fullstack/
 > - **Password:** `1234567890`  
 > ⚠️ *Change these in production for security.*
 
+> 💾 **App or Web  (demo email)**  
+> - **Email:** `ziad@gmail.com`  
+> - **Password:** `1234567890`  
+> ⚠️ *Change these in production for security.*
 ---
 
 ## 🧩 Backend Hooks
@@ -179,8 +220,6 @@ cd Backend-PB
 | Languages        | Dart, TypeScript, JavaScript |
 | Architecture     | Clean Architecture (Flutter) |
 | State Management | Bloc (Flutter)               |
-
-# 📸 Screenshots  
 
  
 # 🔮 Future Improvements
