@@ -1,0 +1,56 @@
+name: fluttermart
+description: A new Flutter project.
+version: 1.0.0+1
+environment: 
+  sdk: ^3.6.0
+dependencies: 
+  flutter: 
+    sdk: flutter
+
+  cached_network_image: ^3.3.1
+  flutter_svg: ^2.0.9
+  shared_preferences: ^2.2.2
+  connectivity_plus: ^5.0.2
+  dio: ^5.4.0
+  fluttertoast: ^8.2.4
+  sizer: ^2.0.15
+  fl_chart: ^0.65.0
+  google_fonts: ^6.1.0
+  web: any
+  data_connection_checker_tv: ^0.3.5-nullsafety
+  dartz: ^0.10.1
+  flutter_bloc: ^9.1.1
+  bloc: ^9.0.0
+  equatable: ^2.0.5
+  jwt_decoder: ^2.0.1
+  get_it: ^7.6.4
+  flutter_secure_storage: ^8.0.0
+  number_pagination: ^1.1.6
+  url_launcher: ^6.3.2
+  icons_launcher: ^3.0.0
+
+dev_dependencies:
+  flutter_test: 
+    sdk: flutter
+  flutter_lints: ^6.0.0
+icons_launcher:
+  image_path: "assets/images/myLogo.png"
+  platforms:
+
+    android:
+      enable: true
+    #      image_path: "assets/imgs/halal icon.png"
+    #      notification_image: "assets/imgs/halal icon.png"
+    #      # adaptive_background_color: '#ffffff'
+    #      adaptive_background_image: "assets/imgs/halal icon.png"
+    #      adaptive_foreground_image: "assets/imgs/halal icon.png"
+    #      adaptive_round_image: "assets/ic_logo_round.png"
+    #      adaptive_monochrome_image: "assets/ic_black_white.png"
+    linux:
+      enable: true
+  flutter_lints: ^5.0.0
+flutter: 
+  uses-material-design: true
+  assets: 
+    - assets/
+    - assets/images/

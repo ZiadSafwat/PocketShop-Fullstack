@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+   sodipodi:docname="nfc logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.11157934"
+     inkscape:cx="17.924466"
+     inkscape:cy="1510.1363"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:#000000;stroke-width:35.9104;stop-color:#000000"
+       id="rect1756"
+       width="170.14688"
+       height="170.14688"
+       x="22.784559"
+       y="66.608612"
+       ry="20.013754" />
+    <path
+       id="path1754"
+       style="fill:#ffffff;stroke-width:36.036;stop-color:#000000"
+       d="m 51.316396,66.608605 -0.0109,28.347729 v 98.921886 28.0419 3.11623 h 0.0713 c 0.32805,2.57471 1.81133,5.34484 4.33863,7.63947 l 4.49325,4.07966 H 85.57425 l -16.332511,-14.8291 v -0.006 -28.0419 l -1.833645,-86.2978 58.569196,55.17413 14.35058,-13.0296 z m 78.825324,0 16.33251,14.8291 v 0.0063 28.041905 l 1.83305,86.2978 -58.56861,-55.17413 -14.35059,13.0296 89.01088,83.11635 0.0115,-28.34773 V 109.48583 81.443922 78.327693 h -0.0713 c -0.32805,-2.574708 -1.81133,-5.344834 -4.33863,-7.639485 l -4.49325,-4.079642 z" />
+  </g>
+</svg>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketBase API Documentation</title>
+    <!-- Swagger UI CSS -->
+    <link rel="stylesheet" href="swagger-ui.css">
+    <link rel="stylesheet" href="styles.css">     
+      <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+        <script src="script.js"></script> 
+
+    <!-- Swagger UI JS files -->
+    <script src="swagger-ui-bundle.js"></script>
+    <script src="swagger-ui-standalone-preset.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>PocketBase API Documentation</h1>
+            </div>
+            <p class="subtitle">Interactive documentation with full testing capabilities</p>
+            <div class="api-info">
+                <div class="info-card">
+                    <i class="fas fa-code-branch"></i>
+                    <span>Version: <span id="api-version">Loading...</span></span>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-server"></i>
+                    <span>Base URL: <span id="api-server">Loading...</span></span>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-file-import"></i>
+                    <span>Source: pocketbase</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div id="content">
+            <div class="loading-container" id="loading">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Loading PocketBase API documentation from <code>pocketbase</code></p>
+            </div>
+            
+            <div id="error" class="error-container" style="display: none;">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2>Error Loading Documentation</h2>
+                <p>Failed to load the PocketBase API specification from <code>pocketbase</code></p>
+                <p id="error-details">Please check that the file exists and is valid JSON.</p>
+            </div>
+            
+            <div class="swagger-ui-container" id="swagger-container" style="display: none;">
+                <div id="swagger-ui"></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>PocketBase API Documentation Viewer • Powered by Swagger UI</p>
+         </div>
+    </div>
+
+
+    
+
+</body>
+</html>
