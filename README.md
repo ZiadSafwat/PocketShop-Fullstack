@@ -2,8 +2,8 @@
 
 A **full-stack e-commerce system** built with **PocketBase**, **Flutter**, and **Angular**, designed for modern scalability and real-time performance.  
 This project is still **under active development**, but it already demonstrates advanced integration between a custom backend, mobile, and web interfaces.
-
----
+<p align="center"> <img src="https://img.shields.io/badge/Backend-PocketBase-blue?style=for-the-badge" /> <img src="https://img.shields.io/badge/Mobile-Flutter-42A5F5?style=for-the-badge" /> <img src="https://img.shields.io/badge/Web-Angular-DD0031?style=for-the-badge" /> <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" /> <img src="https://img.shields.io/github/stars/ziad-elaraby/PocketShop-Fullstack?style=social" /> </p>
+ 
 
 ## 🚀 Overview
 
@@ -192,20 +192,25 @@ cd Backend-PB
 - 📦 Advanced admin dashboard for analytics
 
 - 🪄 Push notifications for offers
+>  🧱 PocketShop Fullstack is currently in development — stay tuned for updates!
 
 # 🧑‍💻 Author
 
-Ziad El-Araby
-Full-Stack Developer | Flutter & Angular Enthusiast
+## Ziad El-Araby
+> Full-Stack Dotnet Developer | Flutter & Angular Enthusiast
 
-## 📩 Contact  
 📧 **Email:** [Ziadsafwataraby@gmail.com](mailto:Ziadsafwataraby@gmail.com)  
 🔗 **Website:** [MyWebsite](https://ziadsafwat.github.io/Ziad-Safwat-Portfolio/)  
 🔗 GitHub: @ZiadSafwat
 
-### 🧱 PocketShop Fullstack is currently in development — stay tuned for updates!
-## If you appreciate the work done on this package, consider supporting it:
+ 
 
-[Support Developer](https://bmc.link/ziadsafwat1)
+ 
 ## 📜 License
 This project is licensed under the MIT License.
+
+
+# ⭐ Support the Project
+
+### If you like PocketShop Fullstack, please consider giving it a star ⭐ on GitHub!
+Or support development [👉 ☕ Buy Me a Coffee](https://bmc.link/ziadsafwat1)
