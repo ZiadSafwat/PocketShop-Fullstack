@@ -1,0 +1,130 @@
+.cart-item {
+    transition: all 0.3s ease;
+  
+    &:hover {
+      background-color: rgba(var(--bs-primary-rgb), 0.05) !important;
+    }
+  
+    .cart-item-image {
+      width: 80px;
+      height: 80px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+  
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  
+    .cart-item-title {
+      color: var(--bs-primary);
+      font-weight: 600;
+    }
+  
+    .cart-item-price {
+      color: var(--bs-success);
+      font-weight: 700;
+    }
+  
+    .cart-item-total {
+      color: var(--bs-success);
+      font-weight: 700;
+    }
+  
+    .quantity-controls {
+      .btn {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+      }
+  
+      .form-control {
+        border-radius: 6px;
+        border: 2px solid var(--bs-border-color);
+        
+        &:focus {
+          border-color: var(--bs-primary);
+          box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+        }
+      }
+    }
+  
+    .btn-outline-danger {
+      border-radius: 6px;
+      transition: all 0.3s ease;
+  
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+  
+  .summary-item {
+    font-size: 0.95rem;
+  }
+  
+  .summary-total {
+    font-size: 1.1rem;
+    border-top: 2px solid var(--bs-border-color);
+    padding-top: 1rem;
+  }
+  
+  .security-notice {
+    border-top: 1px solid var(--bs-border-color);
+    padding-top: 1rem;
+  }
+  
+  .empty-cart-icon {
+    opacity: 0.7;
+  }
+  
+  // Sticky sidebar
+  .sticky-top {
+    z-index: 1020;
+  }
+  
+  // Promo code section
+  .input-group {
+    .form-control {
+      border-radius: 6px 0 0 6px;
+    }
+  
+    .btn {
+      border-radius: 0 6px 6px 0;
+    }
+  }
+  
+  // Responsive design
+  @media (max-width: 768px) {
+    .cart-item {
+      .row {
+        text-align: center;
+      }
+  
+      .cart-item-image {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 1rem;
+      }
+  
+      .quantity-controls {
+        justify-content: center;
+        margin: 1rem 0;
+      }
+    }
+  
+    .btn {
+      &.float-end {
+        float: none !important;
+        margin-top: 1rem;
+        width: 100%;
+      }
+    }
+  }

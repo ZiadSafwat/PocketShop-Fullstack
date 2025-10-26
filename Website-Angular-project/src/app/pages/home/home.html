@@ -1,0 +1,143 @@
+ <!-- Banners Section -->
+ <section class="banner-section" *ngIf="banners().length > 0">
+    <div class="banner-container position-relative">
+      <div class="banner" 
+           [style.backgroundImage]="'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(' + getBannerImage(currentBanner().image,currentBanner().id) + ')'">
+        <div class="banner-content text-center text-white">
+          <h1 class="display-4 fw-bold mb-3">{{ currentBanner().title }}</h1>
+          <p class="lead mb-4">{{ currentBanner().subtitle }}</p>
+          <button class="btn btn-primary btn-lg banner-btn" (click)="navigateToBanner()">
+            {{ languageService.translate('shop_now', translations) }}
+          </button>
+        </div>
+      </div>
+      
+      <div class="banner-indicators position-absolute bottom-0 start-50 translate-middle-x mb-3">
+        <div *ngFor="let banner of banners(); let i = index" 
+             class="indicator" 
+             [class.active]="i === currentBannerIndex"
+             (click)="showBanner(i)"></div>
+      </div>
+      
+      <button class="banner-nav banner-prev" (click)="prevBanner()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="banner-nav banner-next" (click)="nextBanner()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section py-3">
+    <div class="container">
+      <h2 class="section-title text-center mb-3 h4 fw-bold text-uppercase">
+        {{ languageService.translate('categories', translations) }}
+      </h2>
+      
+      <div class="row g-2 justify-content-center">
+        <div *ngFor="let category of categories()" class="col-4 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+          <div 
+            class="category-card card h-100 border-0 text-center transition-fast" 
+            (click)="navigateToCategory(category.id)"
+            style="cursor: pointer;"
+          >
+            <div 
+              class="category-image card-img-top bg-light rounded-rectangle mx-auto mt-2" 
+              [style.backgroundImage]="'url(' + getCategoryImage(category) + ')'"
+              style="
+                height: 75px; 
+                width: 75px; 
+                background-size: contain; /* Ensures the image fits without cropping */
+                background-position: center; 
+                background-repeat: no-repeat;
+              "
+            ></div>
+            <div class="card-body p-1">
+              <h3 class="card-title small mb-0 text-truncate fw-normal">
+                {{ languageService.language() === 'en' ? category.title.en : category.title.ar }}
+              </h3>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Arrivals Section -->
+  <section class="products-section py-5 bg-light">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="section-title display-5 fw-bold mb-0">
+          {{ languageService.translate('new_arrivals', translations) }}
+        </h2>
+        <a routerLink="/search" class="btn btn-outline-primary">
+          {{ languageService.translate('view_all', translations) }}
+        </a>
+      </div>
+      
+      <div class="row g-4">
+        <div *ngFor="let product of newArrivals()" class="col-md-6 col-lg-4 col-xl-3">
+          <app-product-card [product]="product" [userWishListId]="userWishListId()" badge="New"></app-product-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending Products Section -->
+  <section class="products-section py-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="section-title display-5 fw-bold mb-0">
+          {{ languageService.translate('trending', translations) }}
+        </h2>
+        <a routerLink="/search" class="btn btn-outline-primary">
+          {{ languageService.translate('view_all', translations) }}
+        </a>
+      </div>
+      
+      <div class="row g-4">
+        <div *ngFor="let product of trendingProducts()" class="col-md-6 col-lg-4 col-xl-3">
+          <app-product-card [product]="product" [userWishListId]="userWishListId()" badge="Trending"></app-product-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations Section -->
+  <section class="products-section py-5 bg-light" *ngIf="recommendations().length > 0">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="section-title display-5 fw-bold mb-0">
+          {{ languageService.translate('recommendations', translations) }}
+        </h2>
+        <a routerLink="/search" class="btn btn-outline-primary">
+          {{ languageService.translate('view_all', translations) }}
+        </a>
+      </div>
+      
+      <div class="row g-4">
+        <div *ngFor="let product of recommendations()" class="col-md-6 col-lg-4 col-xl-3">
+          <app-product-card [product]="product" [userWishListId]="userWishListId()" badge="For You 💝"></app-product-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div class="loading-section py-5 text-center" *ngIf="loading()">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3">{{ languageService.translate('loading', translations) }}</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-section py-5 text-center" *ngIf="error()">
+    <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 3rem;"></i>
+    <h3>{{ languageService.translate('error', translations) }}</h3>
+    <p class="text-muted mb-4">{{ languageService.translate('load_error', translations) }}</p>
+    <button class="btn btn-primary" (click)="loadHomeData()">
+      {{ languageService.translate('retry', translations) }}
+    </button>
+  </div>

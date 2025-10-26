@@ -1,0 +1,265 @@
+// Use @use instead of @import for Bootstrap
+@use 'bootstrap/scss/bootstrap' as *;
+
+// Import Font Awesome
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+// Dark theme variables
+:root[data-bs-theme="dark"] {
+  --bs-body-bg: #121212;
+  --bs-body-color: #ffffff;
+  --bs-card-bg: #1e1e1e;
+  --bs-border-color: #333333;
+  --bs-light-rgb: 33, 37, 41;
+  --bs-dark-rgb: 248, 249, 250;
+}
+
+// Light theme variables
+:root[data-bs-theme="light"] {
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #212529;
+  --bs-card-bg: #ffffff;
+  --bs-border-color: #dee2e6;
+}
+
+// Rest of your styles remain the same...
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  transition: all 0.3s ease;
+  line-height: 1.6;
+}
+
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bs-body-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bs-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-primary-dark);
+}
+
+// Utility classes
+.text-gradient {
+  background: linear-gradient(135deg, var(--bs-primary), var(--bs-info));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shadow-custom {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+  }
+}
+
+// RTL support for Arabic
+[dir="rtl"] {
+  .text-start { text-align: right !important; }
+  .text-end { text-align: left !important; }
+  .ms-auto { margin-left: 0 !important; margin-right: auto !important; }
+  .me-auto { margin-right: 0 !important; margin-left: auto !important; }
+  .ms-1 { margin-left: 0 !important; margin-right: 0.25rem !important; }
+  .me-1 { margin-right: 0 !important; margin-left: 0.25rem !important; }
+  .ms-2 { margin-left: 0 !important; margin-right: 0.5rem !important; }
+  .me-2 { margin-right: 0 !important; margin-left: 0.5rem !important; }
+  .ms-3 { margin-left: 0 !important; margin-right: 1rem !important; }
+  .me-3 { margin-right: 0 !important; margin-left: 1rem !important; }
+  
+  .float-start { float: right !important; }
+  .float-end { float: left !important; }
+  
+  .dropdown-menu {
+    text-align: right;
+  }
+}
+
+// Loading animations
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideIn {
+  from { 
+    right: -300px; 
+    opacity: 0; 
+  }
+  to { 
+    right: 20px; 
+    opacity: 1; 
+  }
+}
+
+@keyframes fadeOut {
+  from { 
+    opacity: 1; 
+  }
+  to { 
+    opacity: 0; 
+  }
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg); 
+  }
+  100% { 
+    transform: rotate(360deg); 
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+ 
+// Notification styles
+.notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1060;
+  animation: slideIn 0.3s ease;
+  min-width: 300px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border: none;
+  border-radius: 8px;
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes fadeOut {
+  from { 
+    opacity: 1; 
+  }
+  to { 
+    opacity: 0; 
+  }
+}
+
+// Custom button styles
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--bs-primary), #0056b3);
+  border: none;
+  
+  &:hover {
+    background: linear-gradient(135deg, #0056b3, var(--bs-primary));
+  }
+}
+
+// Card styles
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  background: var(--bs-card-bg);
+  
+  &:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+}
+
+// Form styles
+.form-control {
+  border-radius: 8px;
+  border: 2px solid var(--bs-border-color);
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+  }
+}
+
+// Navbar styles
+.navbar {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: var(--bs-primary) !important;
+  }
+  
+  &.active {
+    color: var(--bs-primary) !important;
+    font-weight: 600;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 2rem;
+  }
+  
+  .display-5 {
+    font-size: 1.75rem;
+  }
+  
+  .lead {
+    font-size: 1rem;
+  }
+}
+
+// Print styles
+@media print {
+  .navbar, .btn, .notification {
+    display: none !important;
+  }
+}

@@ -1,0 +1,308 @@
+    <div class="container py-5">
+      <!-- Loading State -->
+      <div *ngIf="loading()" class="text-center py-5">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">{{ languageService.translate('loading', translations) }}</p>
+      </div>
+
+      <!-- Product Details -->
+      <div *ngIf="!loading() && product()" class="row">
+        <!-- Product Images -->
+        <div class="col-lg-6 mb-4">
+          <div class="product-gallery">
+            <!-- Main Image -->
+            <div class="main-image mb-3">
+              <div class="main-image-container" 
+                   [style.backgroundImage]="'url(' + currentImage() + ')'"></div>
+            </div>
+
+            <!-- Image Thumbnails -->
+            <div class="image-thumbnails" *ngIf="product()!.image.length > 1">
+              <div *ngFor="let image of product()!.image; let i = index" 
+                   class="thumbnail" 
+                   [class.active]="i === currentImageIndex"
+                   [style.backgroundImage]="'url(' + getImageUrl(image) + ')'"
+                   (click)="changeImage(i)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-6">
+          <div class="product-info">
+            <!-- Category Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-3">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a routerLink="/" class="text-decoration-none">
+                    {{ languageService.translate('home', translations) }}
+                  </a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="#" class="text-decoration-none">
+                    {{ getCategoryName() }}
+                  </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  {{ getProductTitle() }}
+                </li>
+              </ol>
+            </nav>
+
+            <!-- Product Title -->
+            <h1 class="product-title display-6 fw-bold mb-3">
+              {{ getProductTitle() }}
+            </h1>
+
+            <!-- Rating -->
+            <div class="product-rating mb-3">
+              <div class="d-flex align-items-center">
+                <div class="stars me-2" [innerHTML]="generateRatingStars(product()!.rating)"></div>
+                <span class="rating-value fw-semibold me-2">{{ product()!.rating.toFixed(1) }}</span>
+                <span class="review-count text-muted">
+                  ({{ product()!.review_count }} {{ languageService.translate('reviews', translations) }})
+                </span>
+              </div>
+            </div>
+
+            <!-- Price -->
+            <div class="product-price mb-4">
+              <span class="current-price display-5 fw-bold text-primary me-3">
+                ${{ product()!.price.toFixed(2) }}
+              </span>
+              <span *ngIf="hasDiscount()" 
+                    class="original-price text-muted text-decoration-line-through fs-4">
+                ${{ getOriginalPrice() }}
+              </span>
+              <span *ngIf="hasDiscount()" 
+                    class="discount-badge badge bg-success ms-2 fs-6">
+                {{ calculateDiscount() }}% OFF
+              </span>
+            </div>
+
+            <!-- Description -->
+            <div class="product-description mb-4">
+              <h5 class="fw-semibold mb-3">{{ languageService.translate('description', translations) }}</h5>
+              <p class="text-muted lh-lg">
+                {{ getProductDescription() }}
+              </p>
+            </div>
+
+  <!-- Product Meta -->
+<div class="product-meta mb-4 p-3 border rounded bg-body-secondary">
+  <div class="row">
+    <div class="col-sm-6 mb-2">
+      <strong class="me-2 text-body">{{ languageService.translate('availability', translations) }}:</strong>
+      <span [class]="product()!.stock > 0 ? 'text-success' : 'text-danger'">
+        {{ product()!.stock > 0 ? languageService.translate('in_stock', translations) : languageService.translate('out_of_stock', translations) }}
+      </span>
+    </div>
+    <div class="col-sm-6 mb-2">
+      <strong class="me-2 text-body">{{ languageService.translate('sku', translations) }}:</strong>
+      <span class="text-body-tertiary">PRD-{{ product()!.productId || product()!.id }}</span>
+    </div>
+    <div class="col-sm-6 mb-2" *ngIf="product()!.stock > 0">
+      <strong class="me-2 text-body">{{ languageService.translate('stock', translations) }}:</strong>
+      <span class="text-body-tertiary">{{ product()!.stock }} {{ languageService.translate('available', translations) }}</span>
+    </div>
+    
+    <!-- Colors - Fixed with safe navigation -->
+    <div class="col-sm-6 mb-2" *ngIf="hasColors()">
+      <strong class="me-2 text-body">{{ languageService.translate('colors', translations) }}:</strong>
+      <span class="text-body-tertiary">
+        {{ getColorsDisplay() }}
+      </span>
+    </div>
+    
+    <!-- Sizes - Fixed with safe navigation -->
+    <div class="col-sm-6 mb-2" *ngIf="hasSizes()">
+      <strong class="me-2 text-body">{{ languageService.translate('sizes', translations) }}:</strong>
+      <span class="text-body-tertiary">{{ getSizesDisplay() }}</span>
+    </div>
+  </div>
+</div>
+
+            <!-- Add to Cart Section -->
+            <div class="add-to-cart-section mb-4" *ngIf="product()!.stock > 0">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <label class="form-label fw-semibold">{{ languageService.translate('quantity', translations) }}</label>
+                  <div class="quantity-controls d-flex align-items-center">
+                    <button class="btn btn-outline-secondary" 
+                            (click)="decreaseQuantity()"
+                            [disabled]="quantity() <= 1">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <input type="number" 
+                           class="form-control mx-2 text-center" 
+                           style="width: 80px;"
+                           [value]="quantity()"
+                           (change)="onQuantityChange($event)"
+                           min="1"
+                           [max]="product()!.stock">
+                    <button class="btn btn-outline-secondary" 
+                            (click)="increaseQuantity()"
+                            [disabled]="quantity() >= product()!.stock">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <button class="btn btn-primary btn-lg w-100 py-3" (click)="addToCart()">
+                    <i class="fas fa-shopping-cart me-2"></i>
+                    {{ languageService.translate('add_to_cart', translations) }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Out of Stock Message -->
+            <div *ngIf="product()!.stock <= 0" class="alert alert-warning">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              {{ languageService.translate('out_of_stock_message', translations) }}
+            </div>
+
+            <!-- Wishlist Button -->
+            <div class="wishlist-section mb-4">
+              <button class="btn btn-outline-danger w-100" 
+                      (click)="toggleWishlist()"
+                      [disabled]="!authService.authenticated() || wishlistLoading()">
+                <i class="fas" 
+                   [class.fa-heart]="product()!.is_wishlist && !wishlistLoading()"
+                   [class.fa-spinner]="wishlistLoading()"
+                   [class.fa-spin]="wishlistLoading()"
+                   [class.fa-heart]="!product()!.is_wishlist && !wishlistLoading()"></i>
+                {{ product()!.is_wishlist ? languageService.translate('remove_wishlist', translations) : languageService.translate('add_wishlist', translations) }}
+              </button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+              <button class="btn btn-outline-secondary me-2" routerLink="/">
+                <i class="fas fa-arrow-left me-2"></i>
+                {{ languageService.translate('back_products', translations) }}
+              </button>
+              <button *ngIf="authService.isAdmin()" 
+                      class="btn btn-outline-primary"
+                      [routerLink]="['/admin/products/edit', product()!.productId]">
+                <i class="fas fa-edit me-2"></i>
+                {{ languageService.translate('edit_product', translations) }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ <!-- Reviews Section -->
+<div *ngIf="!loading() && product()" class="row mt-5">
+  <div class="col-12">
+    <div class="reviews-section">
+      <!-- Section Header -->
+      <div class="section-header mb-4">
+        <h3 class="fw-bold text-body mb-2">
+          <i class="fas fa-star me-2 text-primary"></i>
+          {{ languageService.translate('customer_reviews', translations) }}
+        </h3>
+        <div class="rating-summary d-flex align-items-center">
+          <div class="overall-rating me-3">
+            <span class="display-6 fw-bold text-primary">{{ product()!.rating.toFixed(1) }}</span>
+            <span class="text-muted">/5</span>
+          </div>
+          <div class="stars me-3" [innerHTML]="generateRatingStars(product()!.rating)"></div>
+          <span class="review-count text-muted">
+            ({{ product()!.review_count }} {{ languageService.translate('reviews', translations) }})
+          </span>
+        </div>
+      </div>
+      
+      <!-- Reviews List -->
+      <div *ngIf="reviews().length > 0" class="reviews-list">
+        <div *ngFor="let review of reviews()" class="review-item border-0 shadow-sm rounded-3 mb-4 bg-body">
+          <div class="p-4">
+            <div class="row align-items-start">
+              <!-- User Info and Rating -->
+              <div class="col-md-8">
+                <div class="review-header mb-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="user-avatar me-3">
+                      <div class="avatar-placeholder bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                           style="width: 40px; height: 40px; font-size: 1rem;">
+                        {{ (review.expand?.user?.name || languageService.translate('anonymous', translations))[0]?.toUpperCase() }}
+                      </div>
+                    </div>
+                    <div>
+                      <strong class="review-user text-body d-block">
+                        {{ review.expand?.user?.name || languageService.translate('anonymous', translations) }}
+                      </strong>
+                      <div class="review-rating d-inline-block" 
+                           [innerHTML]="generateRatingStars(review.rating)"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Review Comment -->
+                <p class="review-comment text-body lh-lg mb-3">
+                  {{ review.comment }}
+                </p>
+                
+                <!-- Review Date -->
+                <small class="review-date text-body-tertiary">
+                  <i class="fas fa-clock me-1"></i>
+                  {{ formatDate(review.created) }}
+                </small>
+              </div>
+              
+              <!-- Verified Purchase Badge -->
+              <div class="col-md-4 text-md-end">
+                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">
+                  <i class="fas fa-check-circle me-1"></i>
+                  {{ languageService.translate('verified_purchase', translations) }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Reviews -->
+      <div *ngIf="reviews().length === 0" class="no-reviews text-center py-5 border rounded-3 bg-body-secondary">
+        <div class="py-4">
+          <i class="fas fa-comments text-body-tertiary mb-3" style="font-size: 4rem;"></i>
+          <h4 class="fw-semibold text-body mb-3">{{ languageService.translate('no_reviews', translations) }}</h4>
+          <p class="text-body-tertiary mb-4">{{ languageService.translate('no_reviews_message', translations) }}</p>
+          <button class="btn btn-primary" *ngIf="authService.authenticated()">
+            <i class="fas fa-pen me-2"></i>
+            {{ languageService.translate('write_first_review', translations) }}
+          </button>
+        </div>
+      </div>
+
+    
+    </div>
+  </div>
+</div>
+      <!-- Related Products -->
+      <div *ngIf="!loading() && product()" class="row mt-5">
+        <div class="col-12">
+          <h3 class="mb-4">{{ languageService.translate('related_products', translations) }}</h3>
+          <div class="row g-4">
+            <div *ngFor="let relatedProduct of relatedProducts(); let i = index" class="col-md-6 col-lg-3">
+              <app-product-card [product]="relatedProduct" [userWishListId]="product()!.userWishListId||''"></app-product-card>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="!loading() && !product()" class="text-center py-5">
+        <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 4rem;"></i>
+        <h3>{{ languageService.translate('product_not_found', translations) }}</h3>
+        <p class="text-muted mb-4">{{ languageService.translate('product_not_found_message', translations) }}</p>
+        <a routerLink="/" class="btn btn-primary">
+          {{ languageService.translate('back_home', translations) }}
+        </a>
+      </div>
+    </div>
+  

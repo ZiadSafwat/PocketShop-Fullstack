@@ -1,0 +1,217 @@
+<div class="container py-5">
+    <!-- Search Header -->
+    <div class="row mb-5">
+      <div class="col-12">
+        <div class="search-header text-center">
+          <h1 class="display-5 fw-bold mb-3">
+            {{ languageService.translate('search_results', translations) }}
+          </h1>
+          <div class="search-box">
+            <form (submit)="onSearch($event)" class="d-flex gap-3">
+              <div class="flex-grow-1">
+                <input type="text" 
+                       class="form-control form-control-lg" 
+                       [placeholder]="languageService.translate('search_placeholder', translations)"
+                       [(ngModel)]="searchQuery" 
+                       name="searchQuery"
+                       (input)="onSearchInput()">
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-search me-2"></i>
+                {{ languageService.translate('search', translations) }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters and Results -->
+    <div class="row">
+      <!-- Filters Sidebar -->
+      <div class="col-lg-3 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+              <i class="fas fa-filter me-2"></i>
+              {{ languageService.translate('filters', translations) }}
+            </h5>
+          </div>
+          <div class="card-body">
+            <!-- Sort Filter -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">
+                {{ languageService.translate('sort_by', translations) }}
+              </label>
+              <select class="form-select" [(ngModel)]="sortBy" (change)="applyFilters()">
+                <option value="title_en">{{ languageService.translate('name_asc', translations) }}</option>
+                <option value="price_asc">{{ languageService.translate('price_low_high', translations) }}</option>
+                <option value="price_desc">{{ languageService.translate('price_high_low', translations) }}</option>
+                <option value="rating">{{ languageService.translate('rating', translations) }}</option>
+                <option value="newest">{{ languageService.translate('newest', translations) }}</option>
+              </select>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">
+                {{ languageService.translate('price_range', translations) }}
+              </label>
+              <div class="row g-2">
+                <div class="col-6">
+                  <input type="number" 
+                         class="form-control" 
+                         placeholder="Min"
+                         [(ngModel)]="minPrice"
+                         (change)="applyFilters()">
+                </div>
+                <div class="col-6">
+                  <input type="number" 
+                         class="form-control" 
+                         placeholder="Max"
+                         [(ngModel)]="maxPrice"
+                         (change)="applyFilters()">
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                {{ languageService.translate('category', translations) }}
+              </label>
+              <select class="form-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
+                <option value="">{{ languageService.translate('all_categories', translations) }}</option>
+                <option *ngFor="let category of categories()" [value]="category.id">
+                  {{ languageService.language() === 'en' ? category.title.en : category.title.ar }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Clear Filters -->
+            <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+              <i class="fas fa-times me-2"></i>
+              {{ languageService.translate('clear_filters', translations) }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="col-lg-9">
+        <!-- Results Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h4 class="mb-0">
+              {{ languageService.translate('showing', translations) }} 
+              {{ searchResults().length }} 
+              {{ languageService.translate('products', translations) }}
+            </h4>
+            <p class="text-muted mb-0" *ngIf="searchQuery">
+              {{ languageService.translate('for', translations) }} "{{ searchQuery }}"
+            </p>
+          </div>
+          
+          <div class="d-flex align-items-center gap-3">
+            <!-- Loading Spinner -->
+            <div class="spinner-border spinner-border-sm text-primary" 
+                 role="status" *ngIf="loading()">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            
+            <!-- View Toggle -->
+            <div class="btn-group" role="group">
+              <button type="button" 
+                      class="btn btn-outline-primary"
+                      [class.active]="viewMode() === 'grid'"
+                      (click)="viewMode.set('grid')">
+                <i class="fas fa-th"></i>
+              </button>
+              <button type="button" 
+                      class="btn btn-outline-primary"
+                      [class.active]="viewMode() === 'list'"
+                      (click)="viewMode.set('list')">
+                <i class="fas fa-list"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Grid/List -->
+        <div *ngIf="!loading() && searchResults().length > 0"
+             [class]="viewMode() === 'grid' ? 'row g-4' : 'products-list'">
+          
+          <ng-container *ngIf="viewMode() === 'grid'">
+            <div *ngFor="let product of searchResults()" class="col-md-6 col-xl-4">
+              <app-product-card [product]="product" [userWishListId]="userWishListId"></app-product-card>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="viewMode() === 'list'">
+            <div *ngFor="let product of searchResults()" class="product-list-item card mb-3">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-md-3">
+                    <div class="product-image-list" 
+                         [style.backgroundImage]="'url(' + getProductImage(product) + ')'"></div>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="card-title">
+                      {{ languageService.language() === 'en' ? product.title_en : product.title_ar }}
+                    </h5>
+                    <p class="card-text text-muted small">
+                      {{ languageService.language() === 'en' ? product.description_en : product.description_ar | slice:0:150 }}...
+                    </p>
+                    <div class="product-rating small mb-2" 
+                         [innerHTML]="generateRatingStars(product.rating)"></div>
+                    <div class="stock small text-muted">
+                      {{ languageService.translate('in_stock', translations) }}: {{ product.stock }}
+                    </div>
+                  </div>
+                  <div class="col-md-3 text-end">
+                    <div class="product-price h4 text-primary mb-3">
+                      ${{ product.price.toFixed(2) }}
+                    </div>
+                    <div class="btn-group-vertical w-100">
+                      <button class="btn btn-primary btn-sm mb-2" 
+                              (click)="addToCart(product.productId || product.id)"
+                              [disabled]="product.stock <= 0">
+                        {{ languageService.translate('add_to_cart', translations) }}
+                      </button>
+                      <a class="btn btn-outline-secondary btn-sm"
+                              [routerLink]="['/products', product.productId || product.id]">
+                        {{ languageService.translate('details', translations) }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- No Results -->
+        <div *ngIf="!loading() && searchResults().length === 0 && searchQuery" 
+             class="text-center py-5">
+          <i class="fas fa-search mb-3" style="font-size: 4rem; color: #6c757d;"></i>
+          <h4>{{ languageService.translate('no_results', translations) }}</h4>
+          <p class="text-muted mb-4">
+            {{ languageService.translate('no_results_message', translations) }} "{{ searchQuery }}"
+          </p>
+          <button class="btn btn-primary" (click)="clearSearch()">
+            {{ languageService.translate('clear_search', translations) }}
+          </button>
+        </div>
+
+        <!-- Initial State -->
+        <div *ngIf="!loading() && searchResults().length === 0 && !searchQuery" 
+             class="text-center py-5">
+          <i class="fas fa-search mb-3" style="font-size: 4rem; color: var(--bs-primary);"></i>
+          <h4>{{ languageService.translate('search_initial', translations) }}</h4>
+          <p class="text-muted">
+            {{ languageService.translate('search_initial_message', translations) }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>

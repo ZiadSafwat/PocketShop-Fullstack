@@ -1,0 +1,188 @@
+<div class="container py-5">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="display-4 fw-bold mb-4">
+          <i class="fas fa-shopping-cart me-3"></i>
+          {{ languageService.translate('shopping_cart', translations) }}
+        </h1>
+      </div>
+    </div>
+
+    <!-- Empty Cart -->
+    <div *ngIf="cartItems().length === 0" class="text-center py-5">
+      <div class="empty-cart-icon mb-4">
+        <i class="fas fa-shopping-cart" style="font-size: 6rem; color: #6c757d;"></i>
+      </div>
+      <h3 class="mb-3">{{ languageService.translate('empty_cart', translations) }}</h3>
+      <p class="text-muted mb-4">{{ languageService.translate('empty_cart_message', translations) }}</p>
+      <a routerLink="/" class="btn btn-primary btn-lg">
+        <i class="fas fa-shopping-bag me-2"></i>
+        {{ languageService.translate('start_shopping', translations) }}
+      </a>
+    </div>
+
+    <!-- Cart with Items -->
+    <div *ngIf="cartItems().length > 0" class="row">
+      <!-- Cart Items -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">
+              <i class="fas fa-list me-2"></i>
+              {{ languageService.translate('cart_items', translations) }} ({{ cartItems().length }})
+            </h5>
+          </div>
+          <div class="card-body p-0">
+            <div *ngFor="let item of cartItems(); let i = index" 
+                 class="cart-item p-4 border-bottom"
+                 [class.bg-light]="i % 2 === 0">
+              
+              <div class="row align-items-center">
+                <!-- Product Image -->
+                <div class="col-md-2">
+                  <div class="cart-item-image" 
+                       [style.backgroundImage]="'url(' + getProductImage(item.product) + ')'"
+                       routerLink="/products/{{item.id}}"></div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="col-md-4">
+                  <h5 class="cart-item-title mb-2">
+                    {{ getProductTitle(item.product) }}
+                  </h5>
+                  <p class="cart-item-category text-muted small mb-0">
+                    {{ getProductCategory(item.product) }}
+                  </p>
+                  <div class="cart-item-rating small mt-2" 
+                       [innerHTML]="generateRatingStars(item.product?.rating || 0)"></div>
+                </div>
+
+                <!-- Price -->
+                <div class="col-md-2 text-center">
+                  <div class="cart-item-price h5 text-primary">
+                    ${{ (item.product?.price || 0).toFixed(2) }}
+                  </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="col-md-2">
+                  <div class="quantity-controls d-flex align-items-center justify-content-center">
+                    <button class="btn btn-outline-secondary btn-sm" 
+                            (click)="updateQuantity(item.id, item.quantity - 1)"
+                            [disabled]="item.quantity <= 1">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    
+                    <input type="number" 
+                           class="form-control form-control-sm mx-2 text-center" 
+                           [value]="item.quantity"
+                           min="1"
+                           style="width: 60px;"
+                           (change)="updateQuantity(item.id, $any($event.target).value)"
+                           (blur)="validateQuantity(item)">
+                    
+                    <button class="btn btn-outline-secondary btn-sm" 
+                            (click)="updateQuantity(item.id, item.quantity + 1)">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Total & Remove -->
+                <div class="col-md-2 text-center">
+                  <div class="cart-item-total h6 text-success mb-2">
+                    ${{ ((item.product?.price || 0) * item.quantity).toFixed(2) }}
+                  </div>
+                  <button class="btn btn-outline-danger btn-sm" 
+                          (click)="removeFromCart(item.id)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Continue Shopping -->
+        <div class="mt-4">
+          <a routerLink="/" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-2"></i>
+            {{ languageService.translate('continue_shopping', translations) }}
+          </a>
+          
+          <button class="btn btn-outline-danger float-end" (click)="clearCart()">
+            <i class="fas fa-trash me-2"></i>
+            {{ languageService.translate('clear_cart', translations) }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm sticky-top" style="top: 2rem;">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+              <i class="fas fa-receipt me-2"></i>
+              {{ languageService.translate('order_summary', translations) }}
+            </h5>
+          </div>
+          <div class="card-body">
+            <!-- Summary Items -->
+            <div class="summary-item d-flex justify-content-between mb-2">
+              <span>{{ languageService.translate('subtotal', translations) }}</span>
+              <span>${{ subtotal().toFixed(2) }}</span>
+            </div>
+            
+            <div class="summary-item d-flex justify-content-between mb-2">
+              <span>{{ languageService.translate('shipping', translations) }}</span>
+              <span class="text-success">{{ languageService.translate('free', translations) }}</span>
+            </div>
+            
+            <div class="summary-item d-flex justify-content-between mb-2">
+              <span>{{ languageService.translate('tax', translations) }}</span>
+              <span>${{ tax().toFixed(2) }}</span>
+            </div>
+            
+            <hr>
+            
+            <div class="summary-total d-flex justify-content-between mb-4">
+              <strong>{{ languageService.translate('total', translations) }}</strong>
+              <strong class="h5 text-primary">${{ total().toFixed(2) }}</strong>
+            </div>
+
+            <!-- Checkout Button -->
+            <button class="btn btn-success btn-lg w-100 mb-3" (click)="checkout()">
+              <i class="fas fa-lock me-2"></i>
+              {{ languageService.translate('proceed_checkout', translations) }}
+            </button>
+
+            <!-- Security Notice -->
+            <div class="security-notice text-center">
+              <i class="fas fa-shield-alt text-success me-2"></i>
+              <small class="text-muted">
+                {{ languageService.translate('secure_checkout', translations) }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Promo Code -->
+        <div class="card shadow-sm mt-4">
+          <div class="card-body">
+            <h6 class="card-title">
+              <i class="fas fa-tag me-2"></i>
+              {{ languageService.translate('promo_code', translations) }}
+            </h6>
+            <div class="input-group">
+              <input type="text" 
+                     class="form-control" 
+                     [placeholder]="languageService.translate('enter_promo', translations)">
+              <button class="btn btn-outline-primary">
+                {{ languageService.translate('apply', translations) }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

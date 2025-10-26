@@ -1,0 +1,65 @@
+<div class="container py-5">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="display-4 fw-bold mb-4">
+          <i class="fas fa-heart me-3" style="color: #ff4757;"></i>
+          {{ languageService.translate('my_wishlist', translations) }}
+        </h1>
+      </div>
+    </div>
+
+    <!-- Empty Wishlist -->
+    <div *ngIf="wishlistItems().length === 0 && !loading()" class="text-center py-5">
+      <div class="empty-wishlist-icon mb-4">
+        <i class="fas fa-heart" style="font-size: 6rem; color: #ccc;"></i>
+      </div>
+      <h3 class="mb-3">{{ languageService.translate('empty_wishlist', translations) }}</h3>
+      <p class="text-muted mb-4">{{ languageService.translate('empty_wishlist_message', translations) }}</p>
+      <a routerLink="/" class="btn btn-primary btn-lg">
+        <i class="fas fa-shopping-bag me-2"></i>
+        {{ languageService.translate('browse_products', translations) }}
+      </a>
+    </div>
+
+  <!-- Wishlist Items -->
+  <div *ngIf="wishlistItems().length > 0" class="row">
+    <div class="col-12">
+      <div class="wishlist-header p-4 mb-4 border rounded bg-body-tertiary">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h4 class="mb-1 text-body">
+              {{ languageService.translate('wishlist_items', translations) }} ({{ wishlistItems().length }})
+            </h4>
+            <p class="mb-0 text-body-secondary">
+              {{ languageService.translate('wishlist_saved', translations) }}
+            </p>
+          </div>
+          
+          <button class="btn btn-outline-danger" (click)="clearWishlist()" [disabled]="loading()">
+            <i class="fas fa-trash me-2"></i>
+            {{ languageService.translate('clear_wishlist', translations) }}
+          </button>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div *ngFor="let product of wishlistItems()" class="col-md-6 col-lg-4 col-xl-3">
+          <app-product-card 
+            [product]="product" 
+            [userWishListId]="userWishListId"
+            badge="your 💝"
+            (wishlistToggled)="onWishlistToggled()">
+          </app-product-card>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading()" class="text-center py-5">
+      <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3">{{ languageService.translate('loading_wishlist', translations) }}</p>
+    </div>
+  </div>

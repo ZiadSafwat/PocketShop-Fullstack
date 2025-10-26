@@ -1,0 +1,125 @@
+.search-header {
+    background: linear-gradient(135deg, var(--bs-primary), #0056b3);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+  
+    .search-box {
+      max-width: 600px;
+      margin: 0 auto;
+  
+      .form-control {
+        border: none;
+        border-radius: 10px;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  
+        &:focus {
+          box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+      }
+  
+      .btn {
+        border-radius: 10px;
+        padding: 1rem 2rem;
+        white-space: nowrap;
+      }
+    }
+  }
+  
+  .products-list {
+    .product-list-item {
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+  
+      .product-image-list {
+        height: 120px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 8px;
+      }
+  
+      .card-title {
+        color: var(--bs-primary);
+        margin-bottom: 0.5rem;
+      }
+  
+      .product-price {
+        color: var(--bs-success);
+      }
+    }
+  }
+  
+  // Filter sidebar styles
+  .card {
+    .card-header {
+      border-radius: 8px 8px 0 0 !important;
+    }
+  
+    .form-select, .form-control {
+      border-radius: 6px;
+    }
+  }
+  
+  // View mode toggle
+  .btn-group {
+    .btn {
+      border-radius: 6px;
+  
+      &.active {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+        color: white;
+      }
+    }
+  }
+  
+  // Loading state
+  .spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  // Responsive design
+  @media (max-width: 768px) {
+    .search-header {
+      padding: 2rem 1rem;
+  
+      .display-5 {
+        font-size: 1.75rem;
+      }
+  
+      .search-box {
+        .d-flex {
+          flex-direction: column;
+        }
+  
+        .btn {
+          margin-top: 1rem;
+          width: 100%;
+        }
+      }
+    }
+  
+    .products-list {
+      .product-list-item {
+        .row {
+          text-align: center;
+        }
+  
+        .product-image-list {
+          height: 150px;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }

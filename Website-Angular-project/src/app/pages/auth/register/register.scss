@@ -1,0 +1,121 @@
+.vh-100 {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  border: none;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+
+  .card-body {
+    padding: 3rem;
+  }
+}
+
+.form-floating {
+  .form-control {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: var(--bs-primary);
+      box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+
+    &.is-invalid {
+      border-color: var(--bs-danger);
+    }
+  }
+
+  label {
+    padding: 1rem 1.5rem;
+    color: #6c757d;
+  }
+}
+
+.form-check {
+  .form-check-input {
+    margin-top: 0.3rem;
+
+    &:checked {
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+    }
+
+    &.is-invalid {
+      border-color: var(--bs-danger);
+    }
+  }
+
+  .form-check-label {
+    font-size: 0.9rem;
+  }
+}
+
+.btn-primary {
+  border-radius: 10px;
+  padding: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(var(--bs-primary-rgb), 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+// Password strength indicator
+.password-strength {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+
+  &.weak { color: var(--bs-danger); }
+  &.medium { color: var(--bs-warning); }
+  &.strong { color: var(--bs-success); }
+}
+
+// Dark theme support
+[data-bs-theme="dark"] {
+  .card {
+    background: rgba(33, 37, 41, 0.95);
+  }
+
+  .form-control {
+    background-color: var(--bs-dark);
+    border-color: #495057;
+    color: var(--bs-light);
+
+    &:focus {
+      background-color: var(--bs-dark);
+      color: var(--bs-light);
+    }
+  }
+
+  .text-muted {
+    color: #adb5bd !important;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .card-body {
+    padding: 2rem !important;
+  }
+
+  .vh-100 {
+    padding: 2rem 0;
+  }
+}

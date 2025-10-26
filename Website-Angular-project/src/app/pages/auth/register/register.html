@@ -1,0 +1,150 @@
+<section class="vh-100 bg-light">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-lg" style="border-radius: 1rem;">
+            <div class="card-body p-5">
+              <!-- Header -->
+              <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">
+                  <i class="fas fa-user-plus me-2 text-primary"></i>
+                  {{ languageService.translate('create_account', translations) }}
+                </h2>
+                <p class="text-muted">
+                  {{ languageService.translate('create_account_message', translations) }}
+                </p>
+              </div>
+
+              <!-- Registration Form -->
+              <form (submit)="onRegister($event)" [class.was-validated]="formSubmitted()">
+                
+                <!-- Email -->
+                <div class="form-floating mb-4">
+                  <input type="email" 
+                         class="form-control" 
+                         id="email" 
+                         placeholder="name@example.com"
+                         [(ngModel)]="email"
+                         name="email"
+                         required
+                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                         [class.is-invalid]="formSubmitted() && (!email || !isValidEmail())">
+                  <label for="email">
+                    <i class="fas fa-envelope me-2 text-muted"></i>
+                    {{ languageService.translate('email', translations) }}
+                  </label>
+                  <div class="invalid-feedback">
+                    {{ languageService.translate('valid_email_required', translations) }}
+                  </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-floating mb-4">
+                  <input type="password" 
+                         class="form-control" 
+                         id="password" 
+                         placeholder="Password"
+                         [(ngModel)]="password"
+                         name="password"
+                         required
+                         minlength="8"
+                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+                         [class.is-invalid]="formSubmitted() && (!password || !isValidPassword())">
+                  <label for="password">
+                    <i class="fas fa-lock me-2 text-muted"></i>
+                    {{ languageService.translate('password', translations) }}
+                  </label>
+                  <div class="invalid-feedback">
+                    {{ languageService.translate('password_requirements', translations) }}
+                  </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-floating mb-4">
+                  <input type="password" 
+                         class="form-control" 
+                         id="confirmPassword" 
+                         placeholder="Confirm Password"
+                         [(ngModel)]="confirmPassword"
+                         name="confirmPassword"
+                         required
+                         [class.is-invalid]="formSubmitted() && (!confirmPassword || !passwordsMatch())">
+                  <label for="confirmPassword">
+                    <i class="fas fa-lock me-2 text-muted"></i>
+                    {{ languageService.translate('confirm_password', translations) }}
+                  </label>
+                  <div class="invalid-feedback">
+                    {{ languageService.translate('passwords_must_match', translations) }}
+                  </div>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="form-check mb-4">
+                  <input class="form-check-input" 
+                         type="checkbox" 
+                         id="terms"
+                         [(ngModel)]="acceptedTerms"
+                         name="terms"
+                         required
+                         [class.is-invalid]="formSubmitted() && !acceptedTerms">
+                  <label class="form-check-label" for="terms">
+                    {{ languageService.translate('i_agree', translations) }}
+                    <a href="#" class="text-decoration-none">
+                      {{ languageService.translate('terms_conditions', translations) }}
+                    </a>
+                  </label>
+                  <div class="invalid-feedback">
+                    {{ languageService.translate('must_accept_terms', translations) }}
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                        class="btn btn-primary btn-lg w-100 mb-4"
+                        [disabled]="loading()">
+                  <span *ngIf="!loading()">
+                    <i class="fas fa-user-plus me-2"></i>
+                    {{ languageService.translate('create_account', translations) }}
+                  </span>
+                  <span *ngIf="loading()">
+                    <i class="fas fa-spinner fa-spin me-2"></i>
+                    {{ languageService.translate('creating_account', translations) }}
+                  </span>
+                </button>
+
+                <!-- Error Message -->
+                <div *ngIf="error()" class="alert alert-danger py-2">
+                  <i class="fas fa-exclamation-circle me-2"></i>
+                  {{ error() }}
+                </div>
+
+                <!-- Success Message -->
+                <div *ngIf="success()" class="alert alert-success py-2">
+                  <i class="fas fa-check-circle me-2"></i>
+                  {{ languageService.translate('registration_success', translations) }}
+                </div>
+
+                <!-- Divider -->
+                <div class="text-center mb-4">
+                  <hr>
+                  <span class="bg-white px-3 text-muted">
+                    {{ languageService.translate('or', translations) }}
+                  </span>
+                </div>
+
+                <!-- Login Link -->
+                <div class="text-center">
+                  <p class="mb-0">
+                    {{ languageService.translate('already_account', translations) }}
+                    <a routerLink="/login" class="text-decoration-none fw-bold">
+                      {{ languageService.translate('login_here', translations) }}
+                    </a>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

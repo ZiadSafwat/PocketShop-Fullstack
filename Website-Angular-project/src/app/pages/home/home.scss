@@ -1,0 +1,148 @@
+.banner-section {
+    .banner-container {
+      height: 70vh;
+      min-height: 500px;
+      overflow: hidden;
+      border-radius: 0 0 20px 20px;
+    }
+  
+    .banner {
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-image 0.5s ease-in-out;
+    }
+  
+    .banner-content {
+      max-width: 600px;
+      padding: 2rem;
+    }
+  
+    .banner-indicators {
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+  
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+  
+      &.active {
+        background: white;
+        transform: scale(1.2);
+      }
+  
+      &:hover {
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
+  
+    .banner-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+  
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-50%) scale(1.1);
+      }
+  
+      &.banner-prev {
+        left: 20px;
+      }
+  
+      &.banner-next {
+        right: 20px;
+      }
+    }
+  }
+  
+  .categories-section {
+    .category-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+  
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+      }
+    }
+  
+    .category-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 8px 8px 0 0;
+    }
+  }
+  
+  .products-section {
+    .section-title {
+      color: var(--bs-primary);
+      position: relative;
+  
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--bs-primary);
+        border-radius: 2px;
+      }
+    }
+  }
+  
+  .loading-section, .error-section {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  // Responsive design
+  @media (max-width: 768px) {
+    .banner-section {
+      .banner-container {
+        height: 50vh;
+        min-height: 400px;
+      }
+  
+      .banner-content {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+  
+      .banner-nav {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }

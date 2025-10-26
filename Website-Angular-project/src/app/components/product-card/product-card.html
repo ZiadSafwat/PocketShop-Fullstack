@@ -1,0 +1,58 @@
+<div class="product-card h-100" (click)="onCardClick($event)">
+  <div class="product-badge" *ngIf="badge()">{{ badge() }}</div>
+  
+  <div class="product-image position-relative" 
+       [style.backgroundImage]="'url(' + getProductImage(product()) + ')'">
+       <button class="wishlist-btn" 
+       [class.active]="product().is_wishlist"
+       [class.loading]="wishlistLoading()"
+       (click)="onWishlistClick($event)"
+       [disabled]="!authService.authenticated() || wishlistLoading()">
+ 
+       <i [class.fa-spinner]="wishlistLoading()" 
+       [class.fa-spin]="wishlistLoading()"
+       
+       [class.fa-heart]="!wishlistLoading()"
+       [class.fas]="product().is_wishlist" 
+       [class.fa]="!product().is_wishlist"></i>
+</button>
+
+  
+  </div>
+  
+  <div class="product-info p-3 d-flex flex-column h-100">
+    <h3 class="product-title h5 mb-2">
+      {{ languageService.language() === 'en' ? product().title_en : product().title_ar }}
+    </h3>
+    
+    <div class="product-price h6 text-primary mb-2">
+      ${{ product().price.toFixed(2) }}
+      <span class="original-price text-muted text-decoration-line-through ms-2" 
+            *ngIf="hasDiscount()">
+        ${{ getOriginalPrice() }}
+      </span>
+      <span class="discount badge bg-success ms-2" 
+            *ngIf="hasDiscount()">
+        {{ calculateDiscount() }}% off
+      </span>
+    </div>
+    
+    <div class="product-rating small mb-2" [innerHTML]="generateRatingStars(product().rating)"></div>
+    
+    <div class="stock small text-muted mb-3">
+      {{ languageService.translate('in_stock', translations) }}: {{ product().stock }}
+    </div>
+    
+    <div class="btn-container mt-auto">
+      <button class="btn btn-primary btn-sm me-2" 
+              (click)="onAddToCartClick($event)"
+              [disabled]="product().stock <= 0">
+        {{ languageService.translate('add_to_cart', translations) }}
+      </button>
+      <button class="btn btn-outline-secondary btn-sm" 
+              (click)="onDetailsClick($event)">
+        {{ languageService.translate('details', translations) }}
+      </button>
+    </div>
+  </div>
+</div>

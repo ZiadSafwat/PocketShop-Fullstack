@@ -1,0 +1,127 @@
+<nav class="navbar navbar-expand-lg sticky-top" 
+[class]="getNavbarClass()">
+<div class="container">
+<a class="navbar-brand fw-bold" routerLink="/">
+ <i class="fas fa-shopping-bag me-2"></i>
+ {{ languageService.translate('app_name', translations) }}
+</a>
+
+<button class="navbar-toggler" 
+       type="button" 
+       data-bs-toggle="collapse" 
+       data-bs-target="#navbarNav"
+       [attr.aria-controls]="'navbarNav'"
+       [attr.aria-expanded]="false"
+       [attr.aria-label]="'Toggle navigation'">
+ <span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarNav">
+ <ul class="navbar-nav me-auto">
+   <li class="nav-item">
+     <a class="nav-link" 
+        routerLink="/" 
+        routerLinkActive="active"
+        [title]="languageService.translate('home', translations)">
+       {{ languageService.translate('home', translations) }}
+     </a>
+   </li>
+   <li class="nav-item">
+     <a class="nav-link" 
+        routerLink="/search" 
+        routerLinkActive="active">
+       {{ languageService.translate('search', translations) }}
+     </a>
+   </li>
+   <li class="nav-item" *ngIf="authService.authenticated() && authService.isAdmin()">
+     <a class="nav-link" 
+        routerLink="/admin/products/new" 
+        routerLinkActive="active">
+       {{ languageService.translate('add_product', translations) }}
+     </a>
+   </li>
+ </ul>
+ 
+ <div class="navbar-nav d-flex align-items-center">
+   <!-- Theme Toggle -->
+   <button class="btn btn-outline-secondary me-2" 
+           (click)="themeService.toggleTheme()"
+           [title]="themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+     <i [class]="themeService.theme() === 'dark' ? 'fas fa-sun' : 'fas fa-moon'"></i>
+     <span class="visually-hidden">
+       {{ themeService.theme() === 'dark' ? 'Light mode' : 'Dark mode' }}
+     </span>
+   </button>
+   
+   <!-- Language Toggle -->
+   <button class="btn btn-outline-secondary me-2" 
+           (click)="languageService.toggleLanguage()"
+           [title]="languageService.language() === 'en' ? 'Switch to Arabic' : 'Switch to English'">
+     {{ languageService.language() === 'en' ? 'العربية' : 'English' }}
+   </button>
+   
+   <!-- Cart -->
+   <a class="nav-link position-relative me-3" 
+      routerLink="/cart"
+      [title]="languageService.translate('view_cart', translations)">
+     <i class="fas fa-shopping-cart"></i>
+     <span *ngIf="cartService.cartCount() > 0" 
+           class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+       {{ cartService.cartCount() }}
+       <span class="visually-hidden">{{ languageService.translate('items_in_cart', translations) }}</span>
+     </span>
+   </a>
+   
+   <!-- Wishlist -->
+   <a class="nav-link me-3" 
+      routerLink="/wishlist" 
+      *ngIf="authService.authenticated()"
+      [title]="languageService.translate('view_wishlist', translations)">
+     <i class="fas fa-heart"></i>
+   </a>
+   
+   <!-- User Menu -->
+   <div class="nav-item dropdown" *ngIf="authService.authenticated(); else loginButton">
+     <a class="nav-link dropdown-toggle d-flex align-items-center" 
+        href="#" 
+        role="button" 
+        data-bs-toggle="dropdown"
+        [title]="languageService.translate('user_menu', translations)">
+       <i class="fas fa-user-circle me-1"></i>
+       <span class="d-none d-sm-inline">{{ getUsername() }}</span>
+     </a>
+     <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+         <a class="dropdown-item" routerLink="/profile">
+           <i class="fas fa-user me-2"></i>
+           {{ languageService.translate('profile', translations) }}
+         </a>
+       </li>
+       <li>
+         <a class="dropdown-item" routerLink="/orders">
+           <i class="fas fa-shopping-bag me-2"></i>
+           {{ languageService.translate('orders', translations) }}
+         </a>
+       </li>
+       <li><hr class="dropdown-divider"></li>
+       <li>
+         <a class="dropdown-item text-danger" (click)="logout()">
+           <i class="fas fa-sign-out-alt me-2"></i>
+           {{ languageService.translate('logout', translations) }}
+         </a>
+       </li>
+     </ul>
+   </div>
+   
+   <!-- Login Button -->
+   <ng-template #loginButton>
+     <a class="btn btn-primary" 
+        routerLink="/login"
+        [title]="languageService.translate('login', translations)">
+       {{ languageService.translate('login', translations) }}
+     </a>
+   </ng-template>
+ </div>
+</div>
+</div>
+</nav>
